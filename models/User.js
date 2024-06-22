@@ -111,6 +111,11 @@ userSchema.plugin(passportLocalMongoose, {
   usernameField: "email", // 이메일 주소를 사용자 이름으로 사용
 });
 
+userSchema.virtual("fullName").get(function () {
+  return `${this.name.first} ${this.name.last}`;
+}); // 사용자의 풀 네임을 얻기 위한 가상 속성 추가
+
+
 module.exports = mongoose.model("User", userSchema);
 
 /**

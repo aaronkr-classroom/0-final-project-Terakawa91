@@ -13,6 +13,7 @@ const mongoose = require("mongoose"),
       picture_path: {
         type: String,
       },
+      author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       singer: { type: mongoose.Schema.Types.ObjectId, ref: "Singer" },
       release_date: [{ type: mongoose.Schema.Types.ObjectId, ref: "Release_date" }],
       rating: { type: Number, default: 0 },

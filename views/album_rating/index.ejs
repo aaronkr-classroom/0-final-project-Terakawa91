@@ -3,59 +3,59 @@
 <main class="">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="pt-5 pb-5">
-      <h1>Discussions</h1>
-      <p>Here are all our current discussions.</p>
+      <h1>Album rating</h1>
+      <p>Here are all our Album rating</p>
 
       <table class="table text-center">
         <thead>
           <tr>
-            <th class="text-start">Discussion</th>
+            <th class="text-start">Album rating</th>
             <th>Views</th>
             <th>Replies</th>
             <th>Latest Comment</th>
           </tr>
         </thead>
         <tbody>
-          <% album_rating.forEach(discussion => { %>
+          <% album_rating.forEach(album_rating => { %>
           <tr class="mb-3">
             <td class="text-start">
               <h3 class="pt-3">
-                <a href="<%= `/discussions/${discussion._id}` %>"
-                  ><%= discussion.title %></a
+                <a href="<%= `/album_rating${album_rating._id}` %>"
+                  ><%= album_rating.album_name %></a
                 >
               </h3>
-              <p><%= discussion.description.substring(0, 150) %>&hellip;</p>
+              <p><%= album_rating.album_namesubstring(0, 150) %>&hellip;</p>
               <% //if (loggedIn && currentUser == discussion.author) { %>
               <footer>
                 <p>
                   <small>
                     <% if (loggedIn) { %>
-                    <a href="<%=`discussions/${discussion._id}/edit`%>">
+                    <a href="<%=`album_rating/${album_rating._id}/edit`%>">
                       ✏️ Edit
                     </a>
                     <a
-                      href="<%= `discussions/${discussion._id}/delete?_method=DELETE` %>"
+                      href="<%= `album_rating/${album_rating_id}/delete?_method=DELETE` %>"
                       onclick="return confirm('Are you sure you want to delete this record?')"
                       a
                       >🗑️ Delete</a
                     >
                     <% } %> Posted by
-                    <a href="<%= `/users/${discussion.author._id}` %>">
-                      <%= discussion.author.fullName %>
+                    <a href="<%= `/users/${album_rating.author._id}` %>">
+                      <%= album_rating.author.fullName %>
                     </a>
                     on
                     <time datetime="<%= discussion.createdAt.toISOString() %>">
-                      <%= discussion.createdAt.toLocaleDateString() %>
+                      <%= album_rating.createdAt.toLocaleDateString() %>
                     </time>
                   </small>
                 </p>
               </footer>
               <% //} %>
             </td>
-            <td><%= discussion.views %></td>
-            <td><%= discussion.comments.length %></td>
+            <td><%= album_rating.views %></td>
+            <td><%= album_rating.comments.length %></td>
             <td>
-              <% if (discussion.comments.length > 0) { %> <% } else { %> No
+              <% if (album_rating.comments.length > 0) { %> <% } else { %> No
               comments yet. <% } %>
             </td>
           </tr>
@@ -65,20 +65,20 @@
 
       <% if (loggedIn) { %>
       <div class="mt-5 text-center">
-        <a href="/discussions/new" class="btn btn-primary"
-          >Add New Discussion</a
+        <a href="/album_rating/new" class="btn btn-primary"
+          >Add New Album_rating</a
         >
         <a
           href="/"
           class="btn ut-red disabled"
           role="button"
           aria-disabled="true"
-          >Delete All Discussions</a
+          >Delete All Album_rating</a
         >
       </div>
       <% } else { %>
       <div class="mt-5 text-center">
-        <p>Login to Add New Discussion</p>
+        <p>Login to Add New Album rating</p>
         <%- include('../_partials/_loginButtons.ejs') %>
       </div>
       <% } %>
