@@ -12,6 +12,7 @@ const express = require("express"), // express를 요청
   layouts = require("express-ejs-layouts"), // express-ejs-layout의 요청
   app = express(); // express 애플리케이션의 인스턴스화
 
+const album_ratingController = require("./controllers/album_ratingController");
 // controllers 폴더의 파일을 요청
 const pagesController = require("./controllers/pagesController"),
   subscribersController = require("./controllers/subscribersController"),
@@ -20,6 +21,8 @@ const pagesController = require("./controllers/pagesController"),
   talksController = require("./controllers/talksController"),
   trainsController = require("./controllers/trainsController"),
   errorController = require("./controllers/errorController");
+
+  
 
 /**
  * =====================================================================
@@ -65,6 +68,42 @@ app.use(express.json());
 
 const router = express.Router(); // Express 라우터를 인스턴스화
 app.use("/", router); // 라우터를 애플리케이션에 추가
+
+const expressSession = require("express-session"),
+  cookieParser = require("cookie-parser"),
+  connectFlash = require("connect-flash"),
+  expressValidator = require("express-validator"); // Lesson 23 - express-validator 미들웨어를 요청
+
+router.use(cookieParser("secret_passcode")); // cookie-parser 미들웨어를 사용하고 비밀 키를 전달
+router.use(
+  expressSession({
+    // express-session 미들웨어를 사용
+    secret: "secret_passcode", // 비밀 키를 전달
+    cookie: {
+      maxAge: 4000000, // 쿠키의 유효 기간을 설정
+    },
+    resave: false, // 세션을 매번 재저장하지 않도록 설정
+    saveUninitialized: false, // 초기화되지 않은 세션을 저장하지 않도록 설정
+  })
+);
+router.use(connectFlash()); // connect-flash 미들웨어를 사용
+
+const passport = require("passport"); // passport를 요청
+router.use(passport.initialize()); // passport를 초기화
+router.use(passport.session()); // passport가 Express.js 내 세션을 사용하도록 설정
+
+const User = require("./models/User"); // User 모델을 요청
+passport.use(User.createStrategy()); // User 모델의 인증 전략을 passport에 전달
+passport.serializeUser(User.serializeUser()); // User 모델의 직렬화 메서드를 passport에 전달
+passport.deserializeUser(User.deserializeUser()); // User 모델의 역직렬화 메서드를 passport에 전달
+
+router.use((req, res, next) => {
+  // 응답 객체상에서 플래시 메시지의 로컬 flashMessages로의 할당
+  //res.locals.flashMessages = req.flash(); // flash 메시지를 뷰에서 사용할 수 있도록 설정
+  res.locals.loggedIn = req.isAuthenticated(); // 로그인 여부를 확인하는 불리언 값을 로컬 변수에 추가
+  res.locals.currentUser = req.user; // 현재 사용자를 로컬 변수에 추가
+  next();
+});
 
 /**
  * Pages
@@ -197,6 +236,10 @@ router.delete(
   trainsController.delete,
   trainsController.redirectView
 );
+
+// Album_rating
+router.get("/album_rating", album_ratingController.index, album_ratingController.indexView)
+
 
 /**
  * =====================================================================

@@ -1,5 +1,6 @@
 // models/User.js
 "use strict";
+const passportLocalMongoose = require("passport-local-mongoose"); // passport-local-mongoose를 요청
 
 /**
  * Listing 18.1 (p. 259)
@@ -104,6 +105,10 @@ userSchema.pre("save", function (next) {
   } else {
     next(); // 이미 연결 존재 시 다음 미들웨어로 함수 호출
   }
+});
+
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: "email", // 이메일 주소를 사용자 이름으로 사용
 });
 
 module.exports = mongoose.model("User", userSchema);
