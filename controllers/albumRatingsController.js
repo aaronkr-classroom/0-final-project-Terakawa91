@@ -9,8 +9,11 @@ const AlbumRating = require("../models/AlbumRating"), // 사용자 모델 요청
       author: user,
       category: body.category,
       tags: body.tags,
+      rating: body.rating,
     };
   };
+const path = require('path');
+const fs = require('fs');
 
 module.exports = {
   /**
@@ -59,11 +62,20 @@ module.exports = {
    */
   // 4. index: 액션,
   index: (req, res, next) => {
-    AlbumRating.find() 
-      .populate("author") 
+    AlbumRating.find()
+      .populate("author")
       .exec()
       .then((albumRatings) => {
-        // 사용자 배열로 index 페이지 렌더링
+        // 이미지 파일 확인
+        albumRatings.forEach(albumRating => {
+          const imagePath = path.join(__dirname, '..', 'public', 'img', 'album', `${albumRating.title}.jpg`);
+          if (fs.existsSync(imagePath)) {
+            albumRating.imagePath = `/img/album/${albumRating.title}.jpg`;
+          } else {
+            albumRating.imagePath = null;
+          }
+        });
+
         res.locals.albumRatings = albumRatings; // 응답상에서 사용자 데이터를 저장하고 다음 미들웨어 함수 호출
         next();
       })

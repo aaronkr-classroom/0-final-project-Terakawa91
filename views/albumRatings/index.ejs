@@ -1,5 +1,3 @@
-<!-- views/albumRatings/index.ejs -->
-
 <main class="">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="pt-5 pb-5">
@@ -13,51 +11,57 @@
             <th>Views</th>
             <th>Replies</th>
             <th>Latest Comment</th>
+            <th>Rating</th> <!-- 별점 열 추가 -->
           </tr>
         </thead>
         <tbody>
           <% albumRatings.forEach(albumRating => { %>
           <tr class="mb-3">
             <td class="text-start">
-              <h3 class="pt-3">
-                <a href="<%= `/albumRatings/${albumRating._id}` %>"
-                  ><%= albumRating.title %></a
-                >
-              </h3>
-              <p><%= albumRating.description.substring(0, 150) %>&hellip;</p>
-              <% //if (loggedIn && currentUser == albumRating.author) { %>
-              <footer>
-                <p>
-                  <small>
-                    <% if (loggedIn) { %>
-                    <a href="<%=`albumRatings/${albumRating._id}/edit`%>">
-                      ✏️ Edit
-                    </a>
-                    <a
-                      href="<%= `albumRatings/${albumRating._id}/delete?_method=DELETE` %>"
-                      onclick="return confirm('Are you sure you want to delete this record?')"
-                      a
-                      >🗑️ Delete</a
-                    >
-                    <% } %> Posted by
-                    <a href="<%= `/users/${albumRating.author._id}` %>">
-                      <%= albumRating.author.fullName %>
-                    </a>
-                    on
-                    <time datetime="<%= albumRating.createdAt.toISOString() %>">
-                      <%= albumRating.createdAt.toLocaleDateString() %>
-                    </time>
-                  </small>
-                </p>
-              </footer>
-              <% //} %>
+              <div class="d-flex align-items-center">
+                <% if (albumRating.imagePath) { %>
+                <img src="<%= albumRating.imagePath %>" alt="<%= albumRating.title %>" class="img-thumbnail me-3" style="width: 150px; height: 150px; object-fit: cover;">
+                <% } else { %>
+                <div class="img-thumbnail me-3" style="width: 150px; height: 150px; background-color: #ccc; display: flex; align-items: center; justify-content: center;">
+                  <span style="font-size: 12px; color: #666;">no img</span>
+                </div>
+                <% } %>
+                <div>
+                  <h3 class="pt-3">
+                    <a href="<%= `/albumRatings/${albumRating._id}` %>"><%= albumRating.title %></a>
+                  </h3>
+                  <p><%= albumRating.description.substring(0, 150) %>&hellip;</p>
+                  <footer>
+                    <p>
+                      <small>
+                        <% if (loggedIn) { %>
+                        <a href="<%=`albumRatings/${albumRating._id}/edit`%>">✏️ Edit</a>
+                        <a href="<%= `albumRatings/${albumRating._id}/delete?_method=DELETE` %>" 
+                           onclick="return confirm('Are you sure you want to delete this record?')">🗑️ Delete</a>
+                        <% } %> 
+                        Posted by
+                        <a href="<%= `/users/${albumRating.author._id}` %>"><%= albumRating.author.fullName %></a>
+                        on
+                        <time datetime="<%= albumRating.createdAt.toISOString() %>"><%= albumRating.createdAt.toLocaleDateString() %></time>
+                      </small>
+                    </p>
+                  </footer>
+                </div>
+              </div>
             </td>
             <td><%= albumRating.views %></td>
             <td><%= albumRating.comments.length %></td>
             <td>
-              <% if (albumRating.comments.length > 0) { %> <% } else { %> No
-              comments yet. <% } %>
+              <% if (albumRating.comments.length > 0) { %> 
+              <% } else { %> 
+                No comments yet. 
+              <% } %>
             </td>
+            <td>
+              <% for(let i = 0; i < albumRating.rating; i++) { %>
+                ⭐
+              <% } %>
+            </td> <!-- 별점 표시 -->
           </tr>
           <% }); %>
         </tbody>
@@ -65,16 +69,8 @@
 
       <% if (loggedIn) { %>
       <div class="mt-5 text-center">
-        <a href="/albumRatings/new" class="btn btn-primary"
-          >Add New AlbumRating</a
-        >
-        <a
-          href="/"
-          class="btn ut-red disabled"
-          role="button"
-          aria-disabled="true"
-          >Delete All AlbumRatings</a
-        >
+        <a href="/albumRatings/new" class="btn btn-primary">Add New AlbumRating</a>
+        <a href="/" class="btn ut-red disabled" role="button" aria-disabled="true">Delete All AlbumRatings</a>
       </div>
       <% } else { %>
       <div class="mt-5 text-center">

@@ -1,10 +1,3 @@
-<!-- views/users/new.ejs -->
-
-<!--
-  Listing 19.1 (p. 277)
-  사용자 생성 구축
--->
-
 <main class="">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="pt-5">
@@ -41,6 +34,18 @@
                 class="form-control"
                 placeholder="Add a list of tags separated by commas."
               />
+              <label for="inputRating">Rating</label>
+              <select
+                name="rating"
+                id="inputRating"
+                class="form-control"
+              >
+                <option value="1">1 ⭐</option>
+                <option value="2">2 ⭐⭐</option>
+                <option value="3">3 ⭐⭐⭐</option>
+                <option value="4">4 ⭐⭐⭐⭐</option>
+                <option value="5">5 ⭐⭐⭐⭐⭐</option>
+              </select>
               <br /><button class="btn btn-lg ut-red" type="submit">
                 Create AlbumRating
               </button>
