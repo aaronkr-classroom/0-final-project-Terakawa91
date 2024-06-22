@@ -64,6 +64,14 @@ module.exports = {
   index: (req, res, next) => {
     AlbumRating.find()
       .populate("author")
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'author', // 댓글 작성자 정보도 포함
+          select: 'fullName'
+        },
+        options: { sort: { 'createdAt': -1 } } // 최신 댓글 먼저 가져오기
+      })
       .exec()
       .then((albumRatings) => {
         // 이미지 파일 확인
@@ -73,6 +81,12 @@ module.exports = {
             albumRating.imagePath = `/img/album/${albumRating.title}.jpg`;
           } else {
             albumRating.imagePath = null;
+          }
+
+          if (albumRating.comments && albumRating.comments.length > 0) {
+            albumRating.latestComment = albumRating.comments[0];
+          } else {
+            albumRating.latestComment = null;
           }
         });
 

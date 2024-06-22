@@ -52,9 +52,10 @@
             <td><%= albumRating.views %></td>
             <td><%= albumRating.comments.length %></td>
             <td>
-              <% if (albumRating.comments.length > 0) { %> 
+              <% if (albumRating.latestComment && albumRating.latestComment.comment) { %>
+                <%= albumRating.latestComment.comment.substring(0, 50) %>&hellip;
               <% } else { %> 
-                No comments yet. 
+                No comments yet.
               <% } %>
             </td>
             <td>
