@@ -77,7 +77,7 @@ module.exports = {
   indexView: (req, res) => {
     res.render("albumRatings/index", {
       page: "albumRatings",
-      title: "All Discussions",
+      title: "All AlbumRatings",
     }); // 분리된 액션으로 뷰 렌더링
   },
   /**
@@ -136,15 +136,15 @@ module.exports = {
   },
   // 9. update: 액션,
   update: (req, res, next) => {
-    let discussionID = req.params.id,
+    let albumRatingID = req.params.id,
       discussionParams = getDiscussionParams(req.body);
 
-      AlbumRating.findByIdAndUpdate(discussionID, {
+      AlbumRating.findByIdAndUpdate(albumRatingID, {
         $set: discussionParams,
       })
       .populate("author")
       .then((albumRating) => {
-        res.locals.redirect = `/albumRatings/${discussionID}`;
+        res.locals.redirect = `/albumRatings/${albumRatingID}`;
         res.locals.albumRating = albumRating;
         next();
     })
@@ -160,8 +160,8 @@ module.exports = {
    */
   // 10. delete: 액션,
   delete: (req, res, next) => {
-    let discussionID = req.params.id;
-    AlbumRating.findByIdAndRemove(discussionID) // findByIdAndRemove 메소드를 이용한 사용자 삭제
+    let albumRatingID = req.params.id;
+    AlbumRating.findByIdAndRemove(albumRatingID) // findByIdAndRemove 메소드를 이용한 사용자 삭제
       .then(() => {
         res.locals.redirect = "/albumRatings";
         next();

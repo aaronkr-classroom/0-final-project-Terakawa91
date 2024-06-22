@@ -6,7 +6,7 @@
  * 새로운 스키마와 모델의 생성
  */
 const mongoose = require("mongoose"),
-  discussionSchema = mongoose.Schema(
+  albumRatingSchema = mongoose.Schema(
     {
       title: {
         // 강좌 스키마에 속성 추가
@@ -28,4 +28,4 @@ const mongoose = require("mongoose"),
     }
   );
 
-module.exports = mongoose.model("Discussion", discussionSchema);
+module.exports = mongoose.model("AlbumRating", albumRatingSchema);

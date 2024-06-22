@@ -685,3 +685,14 @@ h3.project-title i {
   padding-bottom: 0;
 }
 /*# sourceMappingURL=main.57ac76b1.chunk.css.map */
+h3.project-title i {
+  font-weight: 400;
+}
+.site-title {
+  color: inherit;
+  font-size: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: -0.5rem -1rem;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}

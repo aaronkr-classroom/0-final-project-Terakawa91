@@ -8,13 +8,13 @@
 <main class="">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="pt-5">
-      <h1>Add New Discussion</h1>
+      <h1>Add New AlbumRating</h1>
       <p>Ask questions, post advice, leave feedback.</p>
 
       <div class="row">
         <div class="col-lg-6 mb-3 mt-3">
           <div class="data-form">
-            <form class="form" action="/discussions/create" method="POST">
+            <form class="form" action="/albumRatings/create" method="POST">
               <label for="inputTitle">Title</label>
               <input
                 type="text"
@@ -30,7 +30,7 @@
                 name="description"
                 id="inputDescription"
                 class="form-control"
-                placeholder="Write your discussion topic here..."
+                placeholder="Write your albumRating topic here..."
                 rows="8"
               ></textarea>
               <label for="inputTags">Tags</label>
@@ -42,7 +42,7 @@
                 placeholder="Add a list of tags separated by commas."
               />
               <br /><button class="btn btn-lg ut-red" type="submit">
-                Create Discussion
+                Create AlbumRating
               </button>
             </form>
           </div>

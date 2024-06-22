@@ -8,8 +8,9 @@
  */
 
 const passport = require("passport");
-
 const User = require("../models/User"); // 사용자 모델 요청
+
+
 const getUserParams = (body) => {
   return {
     username: body.username,
@@ -89,6 +90,32 @@ module.exports = {
     res.render("users/new", {
       page: "new-user",
       title: "New User",
+    });
+  },
+
+  validate: (req, res, next) => {
+    // 사용자가 입력한 이메일 주소가 유효한지 확인
+    req
+      .sanitizeBody("email")
+      .normalizeEmail({
+        all_lowercase: true,
+      })
+      .trim(); // trim()으로 whitespace 제거
+    req.check("email", "Email is invalid").isEmail();
+    req.check("password", "Password cannot be empty").notEmpty(); // password 필드 유효성 체크
+
+    // 사용자가 입력한 비밀번호가 일치하는지 확인
+    req.getValidationResult().then((error) => {
+      // 앞에서의 유효성 체크 결과 수집
+      if (!error.isEmpty()) {
+        let messages = error.array().map((e) => e.msg);
+        req.skip = true; // skip 속성을 true로 설정
+        req.flash("error", messages.join(" and ")); // 에러 플래시 메시지로 추가
+        res.locals.redirect = "/users/new"; // new 뷰로 리디렉션 설정
+        next();
+      } else {
+        next(); // 다음 미들웨어 함수 호출
+      }
     });
   },
 

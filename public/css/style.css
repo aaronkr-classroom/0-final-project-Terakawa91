@@ -17,6 +17,12 @@ body {
   padding: 0;
 }
 
+.user-info span {
+  position: relative;
+  top: 3px;
+  right: 3px;
+}
+
 .ut-red {
   color: #ab3135;
 }
@@ -43,7 +49,7 @@ span.ut-red {
 }
 
 #index {
-  background: url(https://cdn.pixabay.com/photo/2019/05/12/11/04/mixer-4197733_1280.jpg)
+  background: url(https://cdn.pixabay.com/photo/2016/11/29/07/16/beach-1868047_1280.jpg)
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -64,7 +70,7 @@ header {
 
 .container {
   max-width: 980px; /* Aaron */
-  height: 72px; /* Aaron */
+  /* height: 72px; /* Aaron - DELETE - makes the page cut off */
   margin: auto;
 }
 
@@ -200,8 +206,8 @@ td {
 }
 
 .user-edit-form input {
-  background: transparent;
-  text-align: center;
+  /* background: transparent;
+  text-align: center; */
 }
 
 .user-edit-form tbody {
@@ -282,4 +288,18 @@ td {
 
 .img-404 img {
   max-height: 50vh;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-signin .logo {
+  margin: auto;
+  float: none;
 }
