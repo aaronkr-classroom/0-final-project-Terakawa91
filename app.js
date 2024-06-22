@@ -21,6 +21,7 @@ const pagesController = require("./controllers/pagesController"),
   talksController = require("./controllers/talksController"),
   trainsController = require("./controllers/trainsController"),
   errorController = require("./controllers/errorController"),
+  commentsController = require("./controllers/commentsController"),
   albumRatingsController = require("./controllers/albumRatingsController");
 
   
@@ -268,6 +269,23 @@ router.get("/albumRatings/:id", albumRatingsController.show, albumRatingsControl
 router.get("/albumRatings/:id/edit", albumRatingsController.edit);
 router.put("/albumRatings/:id/update", albumRatingsController.update, albumRatingsController.redirectView); // 편집 폼에서 받아온 데이터의 처리와 결과를 사용자 보기 페이지에 보여주기
 router.delete("/albumRatings/:id/delete", albumRatingsController.delete, albumRatingsController.redirectView);
+
+
+router.post(
+  "/comments/create",
+  commentsController.create,
+  commentsController.redirectView
+); // 생성 폼에서 받아온 데이터의 처리와 결과를 사용자 보기 페이지에 보여주기
+router.get(
+  "/comments/:id",
+  commentsController.show,
+  commentsController.showView
+);
+router.delete(
+  "/comments/:id/delete",
+  commentsController.delete,
+  commentsController.redirectView
+);
 
 /**
  * =====================================================================

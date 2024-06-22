@@ -1,0 +1,63 @@
+<!-- views/talks/index.ejs -->
+
+<main class="">
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+      <div class="pt-5 pb-5">
+        <h1>Talks</h1>
+        <p>Here are all the talks I've given.</p>
+  
+        <table class="table talks-table table-borderless table-hover">
+          <tbody>
+            <% talks.forEach(function(talk, i) { %>
+            <tr class="list-index-item">
+              <td class="text-left">
+                <a href="<%= talk.links.article %>">
+                  <span class="talk-title"><%= talk.meta.title %></span>
+                </a>
+                <span class="talk-subtitle"><%= talk.meta.subtitle %></span>
+                <span class="talk-location"><%= talk.given.event.name %></span>
+              </td>
+              <td class="talk-date text-right"><%= talk.given.date %></td>
+              <td>
+                <a
+                  class="btn btn-sm btn-outline-secondary"
+                  role="button"
+                  href="/talk/<%= talk.id %>"
+                  >Details</a
+                >
+              </td>
+              <td>
+                <a
+                  class="btn btn-sm btn-outline-primary"
+                  role="button"
+                  href="/talk/<%= talk._id %>/edit"
+                  >Edit</a
+                >
+              </td>
+              <td>
+                <a
+                  class="btn btn-sm btn-outline-danger"
+                  role="button"
+                  href="/talks/<%= talk._id %>/delete?method=DELETE"
+                  onclick="return confirm('Are you sure you want to delete this record?')"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+  
+        <div class="mt-5 text-center">
+          <a href="/talks/new" class="btn btn-primary">Add New Talk</a>
+          <a
+            href="/"
+            class="btn ut-red disabled"
+            role="button"
+            aria-disabled="true"
+            >Delete All Talks</a
+          >
+        </div>
+      </div>
+    </div>
+  </main>
