@@ -1,61 +1,61 @@
-<!-- views/discussions/index.ejs -->
+<!-- views/albumRatings/index.ejs -->
 
 <main class="">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="pt-5 pb-5">
-      <h1>Album rating</h1>
-      <p>Here are all our Album rating</p>
+      <h1>AlbumRatings</h1>
+      <p>Here are all our current albumRatings.</p>
 
       <table class="table text-center">
         <thead>
           <tr>
-            <th class="text-start">Album rating</th>
+            <th class="text-start">AlbumRating</th>
             <th>Views</th>
             <th>Replies</th>
             <th>Latest Comment</th>
           </tr>
         </thead>
         <tbody>
-          <% album_rating.forEach(album_rating => { %>
+          <% albumRatings.forEach(albumRating => { %>
           <tr class="mb-3">
             <td class="text-start">
               <h3 class="pt-3">
-                <a href="<%= `/album_rating${album_rating._id}` %>"
-                  ><%= album_rating.album_name %></a
+                <a href="<%= `/albumRatings/${albumRating._id}` %>"
+                  ><%= albumRating.title %></a
                 >
               </h3>
-              <p><%= album_rating.album_namesubstring(0, 150) %>&hellip;</p>
-              <% //if (loggedIn && currentUser == discussion.author) { %>
+              <p><%= albumRating.description.substring(0, 150) %>&hellip;</p>
+              <% //if (loggedIn && currentUser == albumRating.author) { %>
               <footer>
                 <p>
                   <small>
                     <% if (loggedIn) { %>
-                    <a href="<%=`album_rating/${album_rating._id}/edit`%>">
+                    <a href="<%=`albumRatings/${albumRating._id}/edit`%>">
                       ✏️ Edit
                     </a>
                     <a
-                      href="<%= `album_rating/${album_rating_id}/delete?_method=DELETE` %>"
+                      href="<%= `albumRatings/${albumRating._id}/delete?_method=DELETE` %>"
                       onclick="return confirm('Are you sure you want to delete this record?')"
                       a
                       >🗑️ Delete</a
                     >
                     <% } %> Posted by
-                    <a href="<%= `/users/${album_rating.author._id}` %>">
-                      <%= album_rating.author.fullName %>
+                    <a href="<%= `/users/${albumRating.author._id}` %>">
+                      <%= albumRating.author.fullName %>
                     </a>
                     on
-                    <time datetime="<%= discussion.createdAt.toISOString() %>">
-                      <%= album_rating.createdAt.toLocaleDateString() %>
+                    <time datetime="<%= albumRating.createdAt.toISOString() %>">
+                      <%= albumRating.createdAt.toLocaleDateString() %>
                     </time>
                   </small>
                 </p>
               </footer>
               <% //} %>
             </td>
-            <td><%= album_rating.views %></td>
-            <td><%= album_rating.comments.length %></td>
+            <td><%= albumRating.views %></td>
+            <td><%= albumRating.comments.length %></td>
             <td>
-              <% if (album_rating.comments.length > 0) { %> <% } else { %> No
+              <% if (albumRating.comments.length > 0) { %> <% } else { %> No
               comments yet. <% } %>
             </td>
           </tr>
@@ -65,20 +65,20 @@
 
       <% if (loggedIn) { %>
       <div class="mt-5 text-center">
-        <a href="/album_rating/new" class="btn btn-primary"
-          >Add New Album_rating</a
+        <a href="/albumRatings/new" class="btn btn-primary"
+          >Add New AlbumRating</a
         >
         <a
           href="/"
           class="btn ut-red disabled"
           role="button"
           aria-disabled="true"
-          >Delete All Album_rating</a
+          >Delete All AlbumRatings</a
         >
       </div>
       <% } else { %>
       <div class="mt-5 text-center">
-        <p>Login to Add New Album rating</p>
+        <p>Login to Add New AlbumRating</p>
         <%- include('../_partials/_loginButtons.ejs') %>
       </div>
       <% } %>

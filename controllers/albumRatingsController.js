@@ -1,7 +1,7 @@
 // controllers/discussionsController.js
 "use strict";
 
-const Album_rating = require("../models/Album_rating.js"), // 사용자 모델 요청
+const AlbumRating = require("../models/AlbumRating"), // 사용자 모델 요청
   getDiscussionParams = (body, user) => {
     return {
       title: body.title,
@@ -20,9 +20,9 @@ module.exports = {
    */
   // 1. new: 액션,
   new: (req, res) => {
-    res.render("discussions/new", {
-      page: "new-discussions",
-      title: "New discussions",
+    res.render("albumRatings/new", {
+      page: "new-albumRatings",
+      title: "New albumRatings",
     });
   },
   // 2. create: 액션,
@@ -30,10 +30,10 @@ module.exports = {
     if (req.skip) next(); // 유효성 체크를 통과하지 못하면 다음 미들웨어 함수로 전달
     let discussionParams = getDiscussionParams(req.body, req.user);
 
-    Discussion.create(discussionParams)
-    .then((discussion) => {
-      res.locals.redirect = "/discussions"
-      res.locals.discussion = discussion
+    AlbumRating.create(discussionParams)
+    .then((albumRating) => {
+      res.locals.redirect = "/albumRatings"
+      res.locals.albumRating = albumRating
       next();
     })
     .catch((error) => {
@@ -59,12 +59,12 @@ module.exports = {
    */
   // 4. index: 액션,
   index: (req, res, next) => {
-    Album_rating.find() 
-      //.populate("author") 
+    AlbumRating.find() 
+      .populate("author") 
       .exec()
-      .then((album_rating) => {
+      .then((albumRatings) => {
         // 사용자 배열로 index 페이지 렌더링
-        res.locals.album_rating = album_rating; // 응답상에서 사용자 데이터를 저장하고 다음 미들웨어 함수 호출
+        res.locals.albumRatings = albumRatings; // 응답상에서 사용자 데이터를 저장하고 다음 미들웨어 함수 호출
         next();
       })
       .catch((error) => {
@@ -75,8 +75,8 @@ module.exports = {
   },
   // 5. indexView: 엑션,
   indexView: (req, res) => {
-    res.render("album_rating/index", {
-      page: "discussions",
+    res.render("albumRatings/index", {
+      page: "albumRatings",
       title: "All Discussions",
     }); // 분리된 액션으로 뷰 렌더링
   },
@@ -87,15 +87,15 @@ module.exports = {
    */
   // 6. show: 액션,
   show: (req, res, next) => {
-      Discussion.findById(req.params.id)
+      AlbumRating.findById(req.params.id)
       .populate("author")
       .populate("comments")
-      .then((discussion) => {
-        discussion.views++;
-        discussion.save();
+      .then((albumRating) => {
+        albumRating.views++;
+        albumRating.save();
 
-        res.locals.redirect = "/discussions" // check req
-        res.locals.discussion = discussion
+        res.locals.redirect = "/albumRatings" // check req
+        res.locals.albumRating = albumRating
         next();
     })
     .catch((error) => {
@@ -105,9 +105,9 @@ module.exports = {
   },
   // 7. showView: 액션,
   showView: (req, res) => {
-    res.render("discussions/show", {
-      page: "discussions-details",
-      title: "discussions Details",
+    res.render("albumRatings/show", {
+      page: "albumRatings-details",
+      title: "albumRatings Details",
     });
   },
   /**
@@ -118,14 +118,14 @@ module.exports = {
   // 8. edit: 액션,
   edit: (req, res, next) => {
 
-    Discussion.findById(req.params.id)
+    AlbumRating.findById(req.params.id)
     .populate("author")
     .populate("comments")
-    .then((discussion) => {
-      res.render("discussions/edit", {
-        discussion: discussion,
-        page: "edit-discussion",
-        title: "Edit-discussion"
+    .then((albumRating) => {
+      res.render("albumRatings/edit", {
+        albumRating: albumRating,
+        page: "edit-albumRating",
+        title: "Edit-albumRating"
       });
       // ...
     })
@@ -139,13 +139,13 @@ module.exports = {
     let discussionID = req.params.id,
       discussionParams = getDiscussionParams(req.body);
 
-      Discussion.findByIdAndUpdate(discussionID, {
+      AlbumRating.findByIdAndUpdate(discussionID, {
         $set: discussionParams,
       })
       .populate("author")
-      .then((discussion) => {
-        res.locals.redirect = `/discussions/${discussionID}`;
-        res.locals.discussion = discussion;
+      .then((albumRating) => {
+        res.locals.redirect = `/albumRatings/${discussionID}`;
+        res.locals.albumRating = albumRating;
         next();
     })
       .catch((error) => {
@@ -161,9 +161,9 @@ module.exports = {
   // 10. delete: 액션,
   delete: (req, res, next) => {
     let discussionID = req.params.id;
-    Discussion.findByIdAndRemove(discussionID) // findByIdAndRemove 메소드를 이용한 사용자 삭제
+    AlbumRating.findByIdAndRemove(discussionID) // findByIdAndRemove 메소드를 이용한 사용자 삭제
       .then(() => {
-        res.locals.redirect = "/discussions";
+        res.locals.redirect = "/albumRatings";
         next();
       })
       .catch((error) => {

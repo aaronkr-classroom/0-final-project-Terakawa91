@@ -61,6 +61,8 @@ const mongoose = require("mongoose"),
         type: String,
         trim: true,
       },
+      discussions: [{ type: Schema.Types.ObjectId, ref: "Discussion" }],
+      comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     },
     {
       timestamps: true, // timestamps 속성을 추가해 createdAt 및 updatedAt 시간 기록

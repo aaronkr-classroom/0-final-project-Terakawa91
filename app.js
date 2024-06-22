@@ -12,7 +12,7 @@ const express = require("express"), // express를 요청
   layouts = require("express-ejs-layouts"), // express-ejs-layout의 요청
   app = express(); // express 애플리케이션의 인스턴스화
 
-const album_ratingController = require("./controllers/album_ratingController");
+
 // controllers 폴더의 파일을 요청
 const pagesController = require("./controllers/pagesController"),
   subscribersController = require("./controllers/subscribersController"),
@@ -20,7 +20,8 @@ const pagesController = require("./controllers/pagesController"),
   coursesController = require("./controllers/coursesController"),
   talksController = require("./controllers/talksController"),
   trainsController = require("./controllers/trainsController"),
-  errorController = require("./controllers/errorController");
+  errorController = require("./controllers/errorController"),
+  albumRatingsController = require("./controllers/albumRatingsController");
 
   
 
@@ -237,9 +238,14 @@ router.delete(
   trainsController.redirectView
 );
 
-// Album_rating
-router.get("/album_rating", album_ratingController.index, album_ratingController.indexView)
-
+// AlbumRating
+router.get("/albumRatings", albumRatingsController.index, albumRatingsController.indexView); // index 라우트 생성
+router.get("/albumRatings/new", albumRatingsController.new); // 생성 폼을 보기 위한 요청 처리
+router.post("/albumRatings/create", albumRatingsController.create, albumRatingsController.redirectView); // 생성 폼에서 받아온 데이터의 처리와 결과를 사용자 보기 페이지에 보여주기
+router.get("/albumRatings/:id", albumRatingsController.show, albumRatingsController.showView);
+router.get("/albumRatings/:id/edit", albumRatingsController.edit);
+router.put("/albumRatings/:id/update", albumRatingsController.update, albumRatingsController.redirectView); // 편집 폼에서 받아온 데이터의 처리와 결과를 사용자 보기 페이지에 보여주기
+router.delete("/albumRatings/:id/delete", albumRatingsController.delete, albumRatingsController.redirectView);
 
 /**
  * =====================================================================

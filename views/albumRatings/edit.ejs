@@ -1,0 +1,46 @@
+<main class="user-profile">
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="pt-5">
+      <div class="data-form">
+        <form
+          class="form"
+          action="<%=`/discussions/${discussion._id}/update?_method=PUT`%>"
+          method="POST"
+        >
+          <h2 class="form-signin-heading">Edit discussion:</h2>
+          <label for="inputTitle">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="inputTitle"
+            class="form-control"
+            placeholder="Title"
+            value="<%= discussion.title %>"
+            autofocus
+          />
+          <label for="inputDescription">Description</label>
+          <textarea
+            type="text"
+            name="description"
+            id="inputDescription"
+            class="form-control"
+            rows="8"
+          >
+<%= discussion.description %></textarea
+          >
+
+          <label for="inputTags">Tags</label>
+          <input
+            type="text"
+            name="tags"
+            id="inputTags"
+            class="form-control"
+            placeholder="Add a list of tags separated by commas."
+            value="<%= discussion.tags %>"
+          />
+          <br /><button class="btn btn-lg ut-red" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

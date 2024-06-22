@@ -1,0 +1,61 @@
+<!-- views/users/new.ejs -->
+
+<!--
+  Listing 19.1 (p. 277)
+  사용자 생성 구축
+-->
+
+<main class="">
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="pt-5">
+      <h1>Add New Discussion</h1>
+      <p>Ask questions, post advice, leave feedback.</p>
+
+      <div class="row">
+        <div class="col-lg-6 mb-3 mt-3">
+          <div class="data-form">
+            <form class="form" action="/discussions/create" method="POST">
+              <label for="inputTitle">Title</label>
+              <input
+                type="text"
+                name="title"
+                id="inputTitle"
+                class="form-control"
+                placeholder="Title"
+                autofocus
+              />
+              <label for="inputDescription">Description</label>
+              <textarea
+                type="text"
+                name="description"
+                id="inputDescription"
+                class="form-control"
+                placeholder="Write your discussion topic here..."
+                rows="8"
+              ></textarea>
+              <label for="inputTags">Tags</label>
+              <input
+                type="text"
+                name="tags"
+                id="inputTags"
+                class="form-control"
+                placeholder="Add a list of tags separated by commas."
+              />
+              <br /><button class="btn btn-lg ut-red" type="submit">
+                Create Discussion
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-6 text-center text-lg-start mb-3 mt-5">
+          <figure>
+            <img
+              src="https://cdn.pixabay.com/photo/2018/03/01/07/22/education-3189934_960_720.jpg"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -6,9 +6,54 @@
  * Listing 18.11 (p. 271)
  * userController.js에서 인덱스 액션 생성과 index 액션의 재방문
  */
-const User = require("../models/User"); // 사용자 모델 요청
 
+const passport = require("passport");
+
+const User = require("../models/User"); // 사용자 모델 요청
+const getUserParams = (body) => {
+  return {
+    username: body.username,
+    name: {
+      first: body.first,
+      last: body.last,
+    },
+    email: body.email,
+    password: body.password,
+    profileImg: body.profileImg,
+  };
+};
 module.exports = {
+
+  login: (req, res) => {
+    res.render("users/login", {
+      page: "login",
+      title: "Login",
+    });
+  },
+
+  authenticate: passport.authenticate("local", {
+    // 성공, 실패의 플래시 메시지를 설정하고 사용자의 인중 상태에 따라 리디렉션할 경로를 지정한다
+    failureRedirect: "/users/login",
+    failureFlash: "Failed to login.",
+    successReturnToOrRedirect: "/",
+    successFlash: "Logged in!",
+  }), // passport의 authenticate 메소드를 사용해 사용자 인증
+
+  logout: (req, res, next) => {
+    req.logout(() => {
+      console.log("Logged out!");
+    }); // passport의 logout 메소드를 사용해 사용자 로그아웃
+    req.flash("success", "You have been logged out!"); // 로그아웃 성공 메시지
+    res.locals.redirect = "/"; // 홈페이지로 리디렉션
+    next();
+  },
+
+  redirectView: (req, res, next) => {
+    let redirectPath = res.locals.redirect;
+    if (redirectPath) res.redirect(redirectPath);
+    else next();
+  },
+
   index: (req, res, next) => {
     User.find() // index 액션에서만 퀴리 실행
       .then((users) => {
